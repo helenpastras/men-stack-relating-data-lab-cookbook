@@ -16,6 +16,9 @@
        <a class="food-cards" href="/users/<%=user._id%>/foods/<%=item._id %>">
          <%= item.name %>
        </a>
+       
+       <a href="/users/<%= user._id %>/foods/<%= item._id %>/edit">Edit</a>
+
        <form action="/users/<%= user._id %>/foods/<%= item._id %>?_method=DELETE" method="POST">
         <button type="submit">Delete</button>
        </form>

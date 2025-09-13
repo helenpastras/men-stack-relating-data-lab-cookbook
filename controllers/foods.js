@@ -20,6 +20,18 @@ router.get('/new', (req,res) => {
     res.render('foods/new.ejs');
 })
 
+router.get('/:itemId/edit', async (req, res) => {
+  try {
+    const currentUser = await User.findById(req.session.user._id);
+    const foodItem = currentUser.pantry.id(req.params.itemId);
+
+    res.render('foods/edit.ejs', { user: currentUser, foodItem });
+  } catch (error) {
+    console.log(error);
+    res.redirect('/');
+  }
+});
+
 router.post('/', async (req,res) => {
   try {
       const currentUser = await User.findById(req.session.user._id);
@@ -34,6 +46,23 @@ router.post('/', async (req,res) => {
         res.redirect('/');
     }
 })
+
+router.put('/:itemId', async (req, res) => {
+  try {
+    const currentUser = await User.findById(req.session.user._id);
+    const foodItem = currentUser.pantry.id(req.params.itemId);
+
+    if (!foodItem) throw new Error('Food item not found');
+
+    foodItem.set(req.body); // apply updates from form
+    await currentUser.save(); // persist changes
+
+    res.redirect(`/users/${currentUser._id}/foods`);
+  } catch (error) {
+    console.log(error);
+    res.redirect('/');
+  }
+});
 
 router.delete('/:itemId', async (req, res) => {
   try {
