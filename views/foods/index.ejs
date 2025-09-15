@@ -14,15 +14,17 @@
     <ul class="food-grid">
      <% user.pantry.forEach((item)=> { %>
      <li>
-       <a class="food-cards" href="/users/<%=user._id%>/foods/<%=item._id %>">
-         <%= item.name %>
-       </a>
-       
-       <a href="/users/<%= user._id %>/foods/<%= item._id %>/edit">Edit</a>
+        <a class="food-cards" href="/users/<%=user._id%>/foods/<%=item._id %>">
+          <%= item.name %>
+        </a>
+        
+        <div class="card-actions">
+          <a href="/users/<%= user._id %>/foods/<%= item._id %>/edit">Edit</a>
 
-       <form action="/users/<%= user._id %>/foods/<%= item._id %>?_method=DELETE" method="POST">
-        <button type="submit">Delete</button>
-       </form>
+          <form action="/users/<%= user._id %>/foods/<%= item._id %>?_method=DELETE" method="POST">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
      </li>
      <% }) %>
    </ul>
